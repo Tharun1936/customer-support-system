@@ -51,7 +51,7 @@ Setup :-
 
 2. Clone & Install
 
-git clone <your-repo-url>.git
+git clone <https://github.com/Tharun1936/customer-support-system.git>.git
 cd customer-support-system
 
 # Install root + all workspace deps
