@@ -1,40 +1,43 @@
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 async function main() {
-  console.log('🌱 Seeding database...');
+  console.log('Seeding database...')
 
-  // 1. Create a Sample User
-  const user = await prisma.user.create({
-    data: {
+  // Create user (use upsert so seed can run multiple times safely)
+  const user = await prisma.user.upsert({
+    where: { email: 'customer@example.com' },
+    update: {},
+    create: {
       email: 'customer@example.com',
       name: 'Jane Doe',
     },
-  });
+  })
 
-  // 2. Create Sample Orders for the Order Agent [cite: 24, 30]
-  const order1 = await prisma.order.create({
+  // Create order
+  const order = await prisma.order.create({
     data: {
       userId: user.id,
       status: 'SHIPPED',
       trackingNumber: 'TRK123456789',
-      totalAmount: 150.00,
+      totalAmount: 150.0,
       items: 'Mechanical Keyboard, USB-C Cable',
+      deliveryDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     },
-  });
+  })
 
-  // 3. Create Sample Invoices for the Billing Agent [cite: 26, 30]
+  // Create invoice
   await prisma.invoice.create({
-  data: {
-    userId: user.id,
-    amount: 150.00,
-    status: 'PAID',
-    issuedDate: new Date(),
-  },
-});
+    data: {
+      userId: user.id,
+      amount: 150.0,
+      status: 'PAID',
+      issuedDate: new Date(),
+    },
+  })
 
-  // 4. Create an initial Conversation for context [cite: 31, 35]
+  // Create conversation with messages
   await prisma.conversation.create({
     data: {
       userId: user.id,
@@ -46,21 +49,21 @@ async function main() {
           },
           {
             role: 'assistant',
-            content: 'I would be happy to help! Which order are you referring to?',
+            content: 'Sure! How can I help you with your order?',
           },
         ],
       },
     },
-  });
+  })
 
-  console.log('✅ Seeding complete!');
+  console.log('Seeding complete!')
 }
 
 main()
   .catch((e) => {
-    console.error(e);
-    process.exit(1);
+    console.error(e)
+    process.exit(1)
   })
   .finally(async () => {
-    await prisma.$disconnect();
-  });
+    await prisma.$disconnect()
+  })
