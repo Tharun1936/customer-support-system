@@ -59,8 +59,8 @@ npm install
 
 3. Backend
 
-DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/your_db_name"
-GROQ_API_KEY="your_groq_api_key_here"
+DATABASE_URL="postgresql://postgres:Tharungowda@19@localhost:5432/support_system"
+GROQ_API_KEY="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"
 
    Migration and seed:
    
