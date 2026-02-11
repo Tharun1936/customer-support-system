@@ -35,59 +35,7 @@ Features
 
 Monorepo Structure
 
-customer-support-system/
-├─ package.json                # Turborepo root, workspace config
-├─ turbo.json                  # (if present) turbo pipeline
-├─ apps/
-│  ├─ api/                     # Backend (Hono + Prisma + agents)
-│  │  ├─ package.json
-│  │  ├─ tsconfig.json
-│  │  ├─ .env                  # DATABASE_URL, GROQ_API_KEY, PORT, etc.
-│  │  ├─ prisma/
-│  │  │  ├─ schema.prisma      # PostgreSQL schema (User, Order, Invoice, Conversation, Message)
-│  │  │  └─ seed.ts            # Seed script for demo data
-│  │  └─ src/
-│  │     ├─ index.ts           # Hono app + routes (/api/chat, /api/health, /api/conversations, /api/agents, etc.)
-│  │     ├─ lib/
-│  │     │  ├─ prisma.ts       # PrismaClient instance
-│  │     │  └─ ai.ts           # Groq model config
-│  │     ├─ agents/
-│  │     │  ├─ router.agent.ts # Router agent (ORDER/BILLING/SUPPORT)
-│  │     │  ├─ order.agents.ts # Order support agent
-│  │     │  ├─ billing.agent.ts# Billing support agent
-│  │     │  └─ support.agent.ts# General support agent
-│  │     ├─ tools/
-│  │     │  ├─ order.tools.ts  # DB tools for orders (by email / tracking)
-│  │     │  ├─ billing.tools.ts# DB tools for invoices
-│  │     │  └─ support.tools.ts# DB tools for conversation history
-│  │     └─ services/
-│  │        ├─ chat.service.ts         # Orchestrates router + agents, saves conversation
-│  │        └─ conversation.service.ts # Conversation persistence helpers
-│  │
-│  └─ web/                     # Frontend (Next.js dashboard + chat)
-│     ├─ package.json
-│     ├─ .env.local            # NEXT_PUBLIC_API_URL
-│     ├─ app/
-│     │  ├─ layout.tsx         # Root layout (sidebar + topbar shell)
-│     │  ├─ globals.css        # Global dark theme styles
-│     │  ├─ page.tsx           # Dashboard overview page
-│     │  ├─ chat/
-│     │  │  └─ page.tsx        # AI multi‑agent chat UI
-│     │  ├─ orders/
-│     │  │  └─ page.tsx        # Orders view (calls /api/debug-orders)
-│     │  ├─ billing/
-│     │  │  └─ page.tsx        # Billing overview
-│     │  ├─ support/
-│     │  │  └─ page.tsx        # Support overview
-│     │  └─ tracking/
-│     │     └─ page.tsx        # Tracking overview
-│     └─ app/components/
-│        ├─ Sidebar.tsx        # Left navigation
-│        ├─ Navbar.tsx         # Top bar with search
-│        └─ (other small UI components)
-│
-└─ packages/                   # (optional) shared UI/config packages used by apps
-   └─ ...                      # e.g. @repo/ui, eslint config, tsconfig, etc.
+<img width="728" height="817" alt="Screenshot 2026-02-11 212926" src="https://github.com/user-attachments/assets/30c8bc03-3f57-40d5-ac03-d58f50c2aee0" />
 
 
 Setup :-
